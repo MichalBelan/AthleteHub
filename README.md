@@ -75,4 +75,5 @@ Systém umožní športovcom nastaviť si vlastné ciele a sledovať ich progres
 
 ## Class Diagram
 
+![image alt](https://github.com/MichalBelan/AthleteHub/blob/c79df16b3150cfdc62566d7275028473bbaccaf9/classDiagram_final.png)
 
