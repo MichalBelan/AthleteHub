@@ -72,3 +72,7 @@ Systém umožní trénerom označiť nesprávne alebo neúplné záznamy o výko
 ### RQ15:
 Systém umožní športovcom nastaviť si vlastné ciele a sledovať ich progres.
 
+
+## Class Diagram
+
+
