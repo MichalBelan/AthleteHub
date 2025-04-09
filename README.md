@@ -2,6 +2,9 @@
 
 AthleteHub je moderná aplikácia určená pre športovcov a trénerov, ktorá umožňuje efektívne plánovanie, sledovanie a analýzu tréningov. Poskytuje nástroje na vytváranie personalizovaných tréningových plánov, zaznamenávanie výkonov a spätnú väzbu, čím pomáha športovcom dosahovať ich maximálny potenciál.
 
+📄 [Detailnejšia dokumentácia](README2.md)
+
+
 ## Funkcionality
 - ✅ Registrácia a prihlasovanie používateľov (tréner, športovec)
 - ✅ Vytváranie tréningových plánov s kalendárom
@@ -76,4 +79,7 @@ Systém umožní športovcom nastaviť si vlastné ciele a sledovať ich progres
 ## Class Diagram
 
 ![image alt](https://github.com/MichalBelan/AthleteHub/blob/c79df16b3150cfdc62566d7275028473bbaccaf9/classDiagram_final.png)
+
+
+
 
