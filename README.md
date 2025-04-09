@@ -2,6 +2,7 @@
 
 AthleteHub je moderná aplikácia určená pre športovcov a trénerov, ktorá umožňuje efektívne plánovanie, sledovanie a analýzu tréningov. Poskytuje nástroje na vytváranie personalizovaných tréningových plánov, zaznamenávanie výkonov a spätnú väzbu, čím pomáha športovcom dosahovať ich maximálny potenciál.
 
+## REST API v Spring Boot
 📄 [Detailnejšia dokumentácia](README2.md)
 
 
