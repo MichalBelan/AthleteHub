@@ -1,0 +1,80 @@
+openapi: 3.0.1
+info:
+  title: AthleteHub API
+  version: "1.0.0"
+  description: API špecifikácia pre správu používateľov
+
+paths:
+  /api/users/me:
+    get:
+      summary: Získa aktuálne prihláseného používateľa
+      operationId: getCurrentUser
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Úspešne vrátený používateľ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '401':
+          description: Neautorizovaný prístup
+
+  /api/users:
+    post:
+      summary: Vytvorenie nového používateľa
+      operationId: createUser
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Vstupné údaje pre nového používateľa
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        '201':
+          description: Používateľ bol úspešne vytvorený
+        '400':
+          description: Neplatné dáta
+        '403':
+          description: Prístup zamietnutý
+
+components:
+  schemas:
+    UserDto:
+      type: object
+      required:
+        - name
+        - email
+        - role
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Michal Belan
+        email:
+          type: string
+          example: michal@example.com
+        password:
+          type: string
+          example: heslo123
+        role:
+          type: string
+          enum: [ATHLETE, COACH, ADMIN]
+          example: COACH
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

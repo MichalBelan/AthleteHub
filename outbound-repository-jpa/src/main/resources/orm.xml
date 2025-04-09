@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+        xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_0.xsd"
+        version="3.0">
+
+    <!-- User -->
+    <entity class="sk.posam.fsa.entity.UserEntity" access="FIELD">
+        <table name="user_system"/>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="name"/>
+            <basic name="email"/>
+            <basic name="password"/>
+            <basic name="role">
+                <column name="role" nullable="false"/>
+                <convert converter="sk.posam.fsa.converter.UserRoleConverter"/>
+            </basic>
+        </attributes>
+    </entity>
+
+    <!-- Training Plan -->
+    <entity class="sk.posam.fsa.entity.TrainingPlanEntity" access="FIELD">
+        <table name="training_plan"/>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="title"/>
+            <basic name="schedule"/>
+        </attributes>
+    </entity>
+
+    <!-- Performance -->
+    <entity class="sk.posam.fsa.entity.PerformanceEntity" access="FIELD">
+        <table name="performance"/>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="athleteId"/>
+            <basic name="exerciseId"/>
+            <basic name="result"/>
+        </attributes>
+    </entity>
+
+    <!-- Exercise -->
+    <entity class="sk.posam.fsa.entity.ExerciseEntity" access="FIELD">
+        <table name="exercise"/>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="description"/>
+            <basic name="duration"/>
+        </attributes>
+    </entity>
+
+    <!-- Goal -->
+    <entity class="sk.posam.fsa.entity.GoalEntity" access="FIELD">
+        <table name="goal"/>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="athleteId"/>
+            <basic name="description"/>
+            <basic name="targetDate"/>
+        </attributes>
+    </entity>
+
+    <!-- Notification -->
+    <entity class="sk.posam.fsa.entity.NotificationEntity" access="FIELD">
+        <table name="notification"/>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="userId"/>
+            <basic name="message"/>
+            <basic name="read"/>
+        </attributes>
+    </entity>
+
+</entity-mappings>
