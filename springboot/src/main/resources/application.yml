@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/athletehub
+    url: jdbc:postgresql://localhost:5432/fsa
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -9,7 +9,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          secret-key: 522dee5738f6cea7fd3ff41a00928212a4bec1a0987c5621be2d88e47796f403f9c507cb605ab2f2aaa358b686cb642f30f97f319716916ec0d53b95b39aa8c6
+          issuer-uri: http://localhost:8081/realms/FSA
+          jwk-set-uri: http://localhost:8081/realms/FSA/protocol/openid-connect/certs
 
   jpa:
     mapping-resources: orm.xml

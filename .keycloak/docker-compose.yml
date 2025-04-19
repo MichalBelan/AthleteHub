@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres-fsa:
+    image: postgres:16
+    container_name: postgres-fsa
+    restart: always
+    environment:
+      POSTGRES_DB: fsa
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../sql:/docker-entrypoint-initdb.d
+
+  keycloak:
+    build:
+      context: .keycloak
+      dockerfile: Dockerfile
+    container_name: keycloak-fsa
+    ports:
+      - "8081:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    depends_on:
+      - postgres-fsa
+
+volumes:
+  postgres_data:

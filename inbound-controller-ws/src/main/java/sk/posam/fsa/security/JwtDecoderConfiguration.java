@@ -1,22 +1,36 @@
 package sk.posam.fsa.security;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.nimbusds.jwt.JWT;
+import com.nimbusds.jwt.JWTParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
+import java.text.ParseException;
+import java.util.Map;
 
 @Configuration
 public class JwtDecoderConfiguration {
-    @Value("${spring.security.oauth2.resourceserver.jwt.secret-key}")
-    private String secretKey;
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        SecretKey key = new SecretKeySpec(secretKey.getBytes(), "HmacSHA256");
-        return NimbusJwtDecoder.withSecretKey(key).build();
+        return token -> {
+            try {
+                JWT nimbusJwt = JWTParser.parse(token);
+                String tokenValue = nimbusJwt.serialize();
+                Map<String, Object> headers = nimbusJwt.getHeader().toJSONObject();
+                Map<String, Object> claims = nimbusJwt.getJWTClaimsSet().getClaims();
+                return new Jwt(
+                        tokenValue,
+                        nimbusJwt.getJWTClaimsSet().getIssueTime().toInstant(),
+                        nimbusJwt.getJWTClaimsSet().getExpirationTime().toInstant(),
+                        headers,
+                        claims
+                );
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        };
     }
 }
