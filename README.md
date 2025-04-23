@@ -5,6 +5,9 @@ AthleteHub je moderná aplikácia určená pre športovcov a trénerov, ktorá u
 ## REST API v Spring Boot
 📄 [Detailnejšia dokumentácia](README2.md)
 
+## Angular
+📄 [Detailnejšia dokumentácia](README3.md)
+
 
 ## Funkcionality
 - ✅ Registrácia a prihlasovanie používateľov (tréner, športovec)
