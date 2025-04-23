@@ -7,15 +7,23 @@ import sk.posam.fsa.dto.UserDto;
 @Service
 public class CurrentUserDetailService {
 
-    public UserDto getCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDto user) {
-            return user;
-        }
-        throw new IllegalStateException("No valid user in context");
-    }
+//    public UserDto getCurrentUser() {
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (principal instanceof UserDto user) {
+//            return user;
+//        }
+//        throw new IllegalStateException("No valid user in context");
+//    }
+//
+//    public String getUserEmail() {
+//        return getCurrentUser().getEmail();
+//    }
 
     public String getUserEmail() {
-        return getCurrentUser().getEmail();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof String email) {
+            return email;
+        }
+        throw new IllegalStateException("No valid email in context");
     }
 }

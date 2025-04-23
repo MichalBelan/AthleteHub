@@ -16,13 +16,17 @@ public class UserMapper {
         return dto;
     }
     public User toDomain(UserDto dto) {
+        String role = dto.getRole();
+        UserRole userRole = role != null ? UserRole.valueOf(role) : UserRole.ATHLETE;
+
         return new User(
                 dto.getId(),
                 dto.getName(),
                 dto.getEmail(),
                 dto.getPassword(),
-                UserRole.valueOf(dto.getRole())
+                userRole
         );
     }
+
 
 }

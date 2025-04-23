@@ -36,6 +36,7 @@ public class UserRestController {
     @GetMapping("/me")
     public ResponseEntity<UserDto> getCurrentUser() {
         String email = currentUserDetailService.getUserEmail();
+        System.out.println("Aktuálny email: " + currentUserDetailService.getUserEmail());
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Používateľ sa nenašiel"));
         return ResponseEntity.ok(userMapper.toDto(user));
@@ -44,8 +45,13 @@ public class UserRestController {
     // POST /api/users - registrácia nového používateľa
     @PostMapping
     public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) {
+        System.out.println("Vytváram používateľa: " + userDto.getEmail());
         if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email už existuje");
+        }
+        // 🔽 Tu nastavíme predvolenú rolu
+        if (userDto.getRole() == null || userDto.getRole().isEmpty()) {
+            userDto.setRole("ATHLETE");
         }
 
         User user = userMapper.toDomain(userDto);

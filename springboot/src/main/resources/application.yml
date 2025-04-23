@@ -27,3 +27,8 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     operationsSorter: method
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
