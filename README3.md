@@ -42,10 +42,10 @@ src/
 git clone https://github.com/MichalBelan/AthleteHub.git
 cd frontendAngular/athlete-hub-frontend
 
-# Inštalácia balíčkov
+## Inštalácia balíčkov
 npm install
 
-# Spustenie vývojového servera
+## Spustenie vývojového servera
 ng serve
 
 ## ⚙️ Konfigurácia
