@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.development';
 import {authCodeFlowConfig} from '../config/authCodeFlowConfig.config';
 
 export interface UserDto {

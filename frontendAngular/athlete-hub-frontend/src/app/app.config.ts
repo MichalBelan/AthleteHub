@@ -13,7 +13,7 @@ import {
 import { routes } from './app.routes';
 import { OAuthModule, OAuthModuleConfig, DefaultOAuthInterceptor } from 'angular-oauth2-oidc';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.development';
 import { UserService } from './core/services/user.service';
 
 export const appConfig: ApplicationConfig = {
