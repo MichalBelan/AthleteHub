@@ -36,14 +36,14 @@
     }
   ],
   "roles": {
-    "realm": {
-      "USER": {
+    "realm": [
+      {
         "name": "USER"
       },
-      "ADMIN": {
+      {
         "name": "ADMIN"
       }
-    }
+    ]
   },
   "clients": [
     {
