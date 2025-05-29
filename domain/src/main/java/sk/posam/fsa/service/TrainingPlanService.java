@@ -7,3 +7,6 @@ public class TrainingPlanService {
         return plan != null && plan.getExercises() != null && !plan.getExercises().isEmpty();
     }
 }
+
+
+

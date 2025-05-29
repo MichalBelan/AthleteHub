@@ -2,17 +2,15 @@ openapi: 3.0.1
 info:
   title: AthleteHub API
   version: "1.0.0"
-  description: API špecifikácia pre správu používateľov
+  description: API špecifikácia pre správu používateľov a tréningových plánov
 
 paths:
   /api/users/me:
     get:
       summary: Získa aktuálne prihláseného používateľa
       operationId: getCurrentUser
-      tags:
-        - User
-      security:
-        - bearerAuth: []
+      tags: [ User ]
+      security: [ { bearerAuth: [ ] } ]
       responses:
         '200':
           description: Úspešne vrátený používateľ
@@ -27,33 +25,225 @@ paths:
     post:
       summary: Vytvorenie nového používateľa
       operationId: createUser
-      tags:
-        - User
-      security:
-        - bearerAuth: []
+      tags: [ User ]
+      security: [ { bearerAuth: [ ] } ]
       requestBody:
-        description: Vstupné údaje pre nového používateľa
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UserDto'
       responses:
-        '201':
-          description: Používateľ bol úspešne vytvorený
-        '400':
-          description: Neplatné dáta
-        '403':
-          description: Prístup zamietnutý
+        '201': { description: Používateľ bol úspešne vytvorený }
+        '400': { description: Neplatné dáta }
+        '403': { description: Prístup zamietnutý }
+
+  /api/training-plans:
+    post:
+      summary: Vytvorenie tréningového plánu
+      operationId: createTrainingPlan
+      tags: [ TrainingPlan ]
+      security: [ { bearerAuth: [ ] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrainingPlanDto'
+      responses:
+        '201': { description: Plán bol vytvorený }
+        '400': { description: Neplatné dáta }
+
+  /api/training-plans/{id}:
+    get:
+      summary: Načíta plán podľa ID
+      operationId: getTrainingPlan
+      tags: [ TrainingPlan ]
+      security: [ { bearerAuth: [ ] } ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Nájdený plán
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingPlanDto'
+        '404': { description: Plán sa nenašiel }
+
+  /api/training-plans/athlete/{athleteId}:
+    get:
+      summary: Získa všetky plány pre daného športovca
+      operationId: getPlansByAthlete
+      tags: [ TrainingPlan ]
+      security: [ { bearerAuth: [ ] } ]
+      parameters:
+        - in: path
+          name: athleteId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Zoznam tréningových plánov
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrainingPlanDto'
+        '404': { description: Žiadne plány sa nenašli }
+  /api/performances:
+    post:
+      summary: Vytvorenie výkonnostného záznamu
+      operationId: createPerformance
+      tags: [ Performance ]
+      security: [ { bearerAuth: [ ] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PerformanceDto'
+      responses:
+        '201': { description: Výkon bol úspešne uložený }
+        '400': { description: Neplatné dáta }
+
+  /api/performances/athlete/{athleteId}:
+    get:
+      summary: Získaj výkonnosti daného športovca
+      operationId: getPerformancesByAthlete
+      tags: [ Performance ]
+      security: [ { bearerAuth: [ ] } ]
+      parameters:
+        - in: path
+          name: athleteId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Výkonnostné záznamy
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PerformanceDto'
+        '404': { description: Žiadne výkony neboli nájdené }
+
+  /api/goals:
+    post:
+      summary: Vytvorenie cieľa športovca
+      operationId: createGoal
+      tags: [ Goal ]
+      security: [ { bearerAuth: [ ] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoalDto'
+      responses:
+        '201': { description: Cieľ bol vytvorený }
+        '400': { description: Neplatné dáta }
+
+  /api/goals/athlete/{athleteId}:
+    get:
+      summary: Získanie cieľov pre športovca
+      operationId: getGoalsByAthlete
+      tags: [ Goal ]
+      security: [ { bearerAuth: [ ] } ]
+      parameters:
+        - in: path
+          name: athleteId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Zoznam cieľov
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GoalDto'
+        '404': { description: Žiadne ciele sa nenašli }
+
+  /api/notifications:
+    post:
+      summary: Vytvorenie novej notifikácie
+      operationId: createNotification
+      tags: [ Notification ]
+      security: [ { bearerAuth: [ ] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationDto'
+      responses:
+        '201': { description: Notifikácia bola vytvorená }
+        '400': { description: Neplatné dáta }
+
+  /api/notifications/user/{userId}:
+    get:
+      summary: Získaj všetky notifikácie pre používateľa
+      operationId: getNotificationsByUser
+      tags: [ Notification ]
+      security: [ { bearerAuth: [ ] } ]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Zoznam notifikácií
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationDto'
+        '404': { description: Žiadne notifikácie sa nenašli }
+
+  /api/notifications/{id}/read:
+    put:
+      summary: Označí notifikáciu ako prečítanú
+      operationId: markNotificationAsRead
+      tags: [ Notification ]
+      security: [ { bearerAuth: [ ] } ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204': { description: Notifikácia označená ako prečítaná }
+        '404': { description: Notifikácia sa nenašla }
+
+
+
 
 components:
   schemas:
     UserDto:
       type: object
-      required:
-        - name
-        - email
-        - role
+      required: [ name, email, role ]
       properties:
         id:
           type: integer
@@ -70,8 +260,105 @@ components:
           example: heslo123
         role:
           type: string
-          enum: [ATHLETE, COACH, ADMIN]
+          enum: [ ATHLETE, COACH, ADMIN ]
           example: COACH
+
+    TrainingPlanDto:
+      type: object
+      required: [ title, schedule, athleteId ]
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        title:
+          type: string
+          example: Beh na 5km
+        schedule:
+          type: string
+          format: date
+          example: 2025-06-01
+        athleteId:
+          type: integer
+          format: int64
+          example: 5
+
+    PerformanceDto:
+      type: object
+      required: [ athleteId, metric, value, date ]
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        athleteId:
+          type: integer
+          format: int64
+          example: 5
+        metric:
+          type: string
+          example: Rýchlosť
+        value:
+          type: number
+          format: float
+          example: 22.5
+        date:
+          type: string
+          format: date
+          example: 2025-06-01
+        exerciseId:
+          type: integer
+          format: int64
+          example: 11
+        result:
+          type: number
+          format: double
+          example: 89.75
+
+    GoalDto:
+      type: object
+      required: [ athleteId, description, targetDate ]
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 7
+        athleteId:
+          type: integer
+          format: int64
+          example: 3
+        description:
+          type: string
+          example: Zabehnúť 10 km pod 50 minút
+        achieved:
+          type: boolean
+          example: false
+        targetDate:
+          type: string
+          format: date
+          example: 2025-07-15
+
+    NotificationDto:
+      type: object
+      required: [ userId, message ]
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        userId:
+          type: integer
+          format: int64
+          example: 5
+        message:
+          type: string
+          example: "Nový tréningový plán bol pridaný"
+        read:
+          type: boolean
+          example: false
+
+
+
 
   securitySchemes:
     bearerAuth:

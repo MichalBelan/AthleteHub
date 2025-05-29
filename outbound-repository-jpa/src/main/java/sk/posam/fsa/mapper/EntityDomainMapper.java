@@ -11,7 +11,7 @@ public class EntityDomainMapper {
         entity.setName(user.getName());
         entity.setEmail(user.getEmail());
         entity.setPassword(user.getPassword());
-        entity.setRole(user.getRole().name());
+        entity.setRole(user.getRole());
         return entity;
     }
 
@@ -21,9 +21,10 @@ public class EntityDomainMapper {
                 entity.getName(),
                 entity.getEmail(),
                 entity.getPassword(),
-                UserRole.valueOf(entity.getRole())
+                entity.getRole()
         );
     }
+
     public static TrainingPlanEntity toEntity(TrainingPlan plan) {
         TrainingPlanEntity entity = new TrainingPlanEntity();
         entity.setId(plan.getId());

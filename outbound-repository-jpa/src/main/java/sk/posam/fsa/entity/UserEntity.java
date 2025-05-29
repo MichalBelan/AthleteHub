@@ -1,6 +1,9 @@
+
 package sk.posam.fsa.entity;
 
 import jakarta.persistence.*;
+import sk.posam.fsa.UserRole;
+import sk.posam.fsa.converter.UserRoleConverter;
 
 @Entity
 @Table(name = "user_system")
@@ -15,9 +18,8 @@ public class UserEntity {
     private String email;
 
     private String password;
-
-    @Convert(converter = sk.posam.fsa.converter.UserRoleConverter.class)
-    private String role;
+    @Convert(converter = UserRoleConverter.class)
+    private UserRole role;
 
     // Gettery a settery
     public Long getId() {
@@ -52,11 +54,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 }

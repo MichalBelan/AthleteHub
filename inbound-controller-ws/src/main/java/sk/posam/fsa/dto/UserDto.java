@@ -1,10 +1,15 @@
 package sk.posam.fsa.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class UserDto {
     private Long id;
+    @NotBlank(message = "Meno nesmie byť prázdne")
     private String name;
+    @NotBlank(message = "Email nesmie byť prázdny")
     private String email;
     private String role;
+    @NotBlank(message = "Heslo nesmie byť prázdne")
     private String password;
 
     // Getters and setters

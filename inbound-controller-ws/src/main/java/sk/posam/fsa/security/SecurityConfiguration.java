@@ -12,6 +12,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -26,34 +27,51 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll() // povoliť registráciu
+                        // ✅ Public endpoint pre registráciu
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+
+                        // ✅ Swagger a OpenAPI public
                         .requestMatchers(
-                                "/api/auth/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
+
+                        // ✅ Admin-only endpoints
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // ✅ Coach-only endpoints
+                        .requestMatchers("/api/coach/**").hasRole("COACH")
+
+                        // ✅ Athlete-only endpoints
+                        .requestMatchers("/api/athlete/**").hasRole("ATHLETE")
+
+                        // ✅ Všetky ostatné vyžadujú autentifikáciu
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter))
                 )
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> {});
+                .cors(cors -> {
+                }); // použije corsConfigurationSource
+
         return http.build();
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 }

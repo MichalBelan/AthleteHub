@@ -13,6 +13,7 @@ import sk.posam.fsa.ports.UserRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken> {
@@ -29,10 +30,16 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
     public AbstractAuthenticationToken convert(Jwt jwt) {
         String email = jwt.getClaimAsString("email");
 
-        // Môžeš aj bez authorities, ak nepotrebuješ kontrolovať role
-        return new UsernamePasswordAuthenticationToken(email, null, List.of());
-    }
+        List<String> roles = jwt.getClaim("realm_access") != null
+                ? ((Map<String, List<String>>) jwt.getClaim("realm_access")).get("roles")
+                : List.of();
 
+        List<SimpleGrantedAuthority> authorities = roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .toList();
+
+        return new UsernamePasswordAuthenticationToken(email, null, authorities);
+    }
 
 
 }

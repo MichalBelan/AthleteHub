@@ -7,8 +7,8 @@
       "enabled": true,
       "emailVerified": true,
       "firstName": "Admin",
-      "lastName": "User",
-      "email": "admin@fsa.local",
+      "lastName": "Guru",
+      "email": "admin@posam.sk",
       "credentials": [
         {
           "type": "password",
@@ -19,12 +19,28 @@
       "realmRoles": ["ADMIN"]
     },
     {
-      "username": "testuser",
+      "username": "michal",
       "enabled": true,
       "emailVerified": true,
-      "firstName": "Test",
-      "lastName": "User",
-      "email": "testuser@fsa.local",
+      "firstName": "Michal",
+      "lastName": "Belan",
+      "email": "michalbelan64@azet.sk",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "pusinka503",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["ATHLETE"]
+    },
+    {
+      "username": "martin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Martin",
+      "lastName": "Belan",
+      "email": "martinbelan64@gmail.sk",
       "credentials": [
         {
           "type": "password",
@@ -32,16 +48,19 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["USER"]
+      "realmRoles": ["COACH"]
     }
   ],
   "roles": {
     "realm": [
       {
-        "name": "USER"
+        "name": "ATHLETE"
       },
       {
         "name": "ADMIN"
+      },
+      {
+        "name": "COACH"
       }
     ]
   },
